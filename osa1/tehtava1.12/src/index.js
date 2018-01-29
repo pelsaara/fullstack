@@ -20,25 +20,54 @@ class App extends React.Component {
         this.setState({ votes: kopio })
     }
 
+    mostVotes = () => {
+        const kopio = [...this.state.votes]
+        let max = kopio[0];
+        let maxIndex = 0;
+
+        for (let i = 1; i < kopio.length; i++) {
+            if (kopio[i] > max) {
+                maxIndex = i;
+                max = kopio[i];
+            }
+        }
+        return maxIndex
+    }
+
     render() {
         return (
             <div>
-                <p>
-                    {this.props.anecdotes[this.state.selected]}
-                </p>
-                <p>
-                    This anecdote has {this.state.votes[this.state.selected]} votes
-                </p>
-                <Button
-                    handleClick={this.randomAnecdote()}
-                    text="Next Anecdote"
-                />
-                <Button
-                    handleClick={this.addVote()}
-                    text="Vote"
-                />
+                <div>
+                    <p>
+                        {this.props.anecdotes[this.state.selected]}
+                    </p>
+                    <p>
+                        This anecdote has {this.state.votes[this.state.selected]} votes
+                    </p>
+                    <tr>
+                        <td>
+                            <Button
+                                handleClick={this.randomAnecdote()}
+                                text="Next Anecdote"
+                            />
+                        </td> <td>
+                            <Button
+                                handleClick={this.addVote()}
+                                text="Vote"
+                            />
+                        </td>
+                    </tr>
+                </div>
+                <div>
+                    <h3> Anecdote with most votes</h3>
+                    <p>
+                        {this.props.anecdotes[this.mostVotes()]}
+                    </p>
+                    <p>
+                        This anecdote has {this.state.votes[this.mostVotes()]} votes
+                    </p>
+                </div>
             </div>
-
         )
     }
 }

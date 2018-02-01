@@ -15,11 +15,16 @@ const App = () => {
           tehtavia: 7,
           id: 2
         },
-//        {
-//          nimi: 'Komponenttien tila',
-//          tehtavia: 14,
-//          id: 3
-//        }
+        {
+          nimi: 'Komponenttien tila',
+          tehtavia: 14,
+          id: 3
+        },
+        {
+            nimi: 'Moduuli',
+            tehtavia: 8,
+            id: 4
+          }
       ]
     }
   

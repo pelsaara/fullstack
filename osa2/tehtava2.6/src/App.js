@@ -52,7 +52,6 @@ class App extends React.Component {
     }
 
 
-
     render() {
         const personsToShow =
         this.state.filter==='' ?

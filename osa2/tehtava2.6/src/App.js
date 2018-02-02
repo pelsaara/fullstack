@@ -17,13 +17,15 @@ class App extends React.Component {
         const nameObject = {
             name: this.state.newName
         }
+        if (!this.state.persons.find(person => person.name.toLowerCase() === this.state.newName.toLowerCase())){
+            const persons = this.state.persons.concat(nameObject)
 
-        const persons = this.state.persons.concat(nameObject)
+            this.setState({
+                persons: persons,
+                newName: ''
+            })
+        } 
 
-        this.setState({
-            persons: persons,
-            newNote: ''
-        })
     }
 
     handleNameChange = (event) => {

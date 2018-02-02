@@ -1,12 +1,10 @@
-import React from 'react';
+import React from 'react'
 
 const Person = (props) => {
         return (
-            <div>
-                {props.person.name} <br/>
-            </div>
+                <tr><td>{props.person.name}</td><td>{props.person.number}</td></tr>
         )
     
 }
 
-export default Person;
+export default Person

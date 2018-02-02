@@ -1,7 +1,7 @@
 import React from 'react'
 import Person from './Person'
 
-const Content = (props) => {
+const PersonList = (props) => {
     return (
         <div>
             <h2>Numerot</h2>
@@ -12,4 +12,4 @@ const Content = (props) => {
     )
 }
 
-export default Content
+export default PersonList

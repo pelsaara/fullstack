@@ -1,5 +1,5 @@
 import React from 'react'
-import Content from './components/Content'
+import PersonList from './components/PersonList'
 
 class App extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class App extends React.Component {
             name: this.state.newName,
             number: this.state.newNumber
         }
-        if (!this.state.persons.find(person => person.name.toLowerCase() === this.state.newName.toLowerCase())            ) {
+        if (!this.state.persons.find(person => person.name.toLowerCase() === this.state.newName.toLowerCase())) {
 
             const persons = this.state.persons.concat(PersonObject)
 
@@ -46,12 +46,29 @@ class App extends React.Component {
         this.setState({ newNumber: event.target.value })
     }
 
+    handleFilterChange = (event) => {
+        console.log(event.target.value)
+        this.setState({ filter: event.target.value })        
+    }
+
 
 
     render() {
+        const personsToShow =
+        this.state.filter==='' ?
+          this.state.persons :
+          this.state.persons.filter(person => person.name.toLowerCase().startsWith(this.state.filter.toLowerCase()))
         return (
             <div>
                 <h2>Puhelinluettelo</h2>
+                <div>
+                    Rajaa näytettäviä:
+                    <input
+                        value={this.state.filter}
+                        onChange={this.handleFilterChange}
+                    />
+                </div>
+                <h2>Lisää uusi</h2>
                 <form onSubmit={this.addPerson}>
                     <div>
                         nimi:&emsp;
@@ -69,7 +86,7 @@ class App extends React.Component {
                     </div>
                     <button type="submit">lisää</button>
                 </form>
-                <Content persons={this.state.persons} />
+                <PersonList persons={personsToShow} />
             </div>
         )
     }

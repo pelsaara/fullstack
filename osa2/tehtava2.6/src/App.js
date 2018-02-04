@@ -36,17 +36,14 @@ class App extends React.Component {
     }
 
     handleNameChange = (event) => {
-        console.log(event.target.value)
         this.setState({ newName: event.target.value })
     }
 
     handleNumberChange = (event) => {
-        console.log(event.target.value)
         this.setState({ newNumber: event.target.value })
     }
 
     handleFilterChange = (event) => {
-        console.log(event.target.value)
         this.setState({ filter: event.target.value })        
     }
 

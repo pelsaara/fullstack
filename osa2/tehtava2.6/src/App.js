@@ -1,6 +1,6 @@
 import React from 'react'
 import PersonList from './components/PersonList'
-import axios from 'axios'
+import personService from './services/persons'
 
 class App extends React.Component {
     constructor(props) {
@@ -15,19 +15,22 @@ class App extends React.Component {
 
     addPerson = (event) => {
         event.preventDefault()
-        const PersonObject = {
+        const personObject = {
             name: this.state.newName,
             number: this.state.newNumber
         }
         if (!this.state.persons.find(person => person.name.toLowerCase() === this.state.newName.toLowerCase())) {
 
-            const persons = this.state.persons.concat(PersonObject)
-
-            this.setState({
-                persons: persons,
+            personService
+            .create(personObject)
+            .then(newPerson => {
+              this.setState({
+                persons: this.state.persons.concat(newPerson),
                 newName: '',
                 newNumber: ''
+              })
             })
+            
         }
 
     }
@@ -49,12 +52,11 @@ class App extends React.Component {
 
     componentWillMount() {
         console.log('will mount')
-        axios
-          .get('http://localhost:3001/persons')
-          .then(response => {
-            console.log('promise fulfilled')
-            this.setState({ persons: response.data })
-          })
+        personService
+        .getAll()
+        .then(response => {
+          this.setState({ persons: response })
+        })
       }
 
 

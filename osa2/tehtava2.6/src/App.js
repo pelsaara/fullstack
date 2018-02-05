@@ -1,6 +1,8 @@
 import React from 'react'
 import PersonList from './components/PersonList'
 import personService from './services/persons'
+import Notification from './components/Notification'
+import './index.css'
 
 class App extends React.Component {
     constructor(props) {
@@ -9,7 +11,8 @@ class App extends React.Component {
             persons: [],
             newName: '',
             newNumber: '',
-            filter: ''
+            filter: '',
+            message: null
         }
     }
 
@@ -31,6 +34,14 @@ class App extends React.Component {
                     })
                 })
 
+            this.setState({
+                message: `${personObject.name} lisätty onnistuneesti`
+            })
+            setTimeout(() => {
+                this.setState({ message: null })
+            }, 5000)
+
+
         } else {
             if (window.confirm(`${personObject.name} on jo luettelossa, korvataanko numero uudella?`)) {
                 const person = this.state.persons.find(p => p.name.toLowerCase() === personObject.name.toLowerCase())
@@ -38,25 +49,29 @@ class App extends React.Component {
                     ...person,
                     number: personObject.number
                 }
-                console.log(person.name)
-                console.log(updatedPerson.name)
-                console.log(updatedPerson.id)
                 personService
                     .update(updatedPerson.id, updatedPerson)
                     .then(uPerson =>
                         this.setState({
                             persons: this.state.persons.map(person => person.id !== updatedPerson.id ? person : uPerson),
                             newName: '',
-                            newNumber: ''
+                            newNumber: '',
+                            message: `Henkilön ${updatedPerson.name} tiedot päivitetty onnistuneesti`
                         })
-                    )
+                    ).then(
+                    setTimeout(() => {
+                        this.setState({ message: null })
+                    }, 5000)
+                    ).catch(error => {
+                        alert(`Henkilö '${personObject.name}' on jo valitettavasti poistettu palvelimelta`)
+                        this.setState({ persons: this.state.persons.filter(p => p.name.toLowerCase() !== personObject.name.toLowerCase()) })                    })
+
             }
         }
 
     }
 
     componentWillMount() {
-        console.log('will mount')
         personService
             .getAll()
             .then(response => {
@@ -65,12 +80,22 @@ class App extends React.Component {
     }
 
     deletePerson = (id) => {
-        if (window.confirm(`Haluatko varmasti poistaa henkilön ${this.state.persons.find(p => p.id === id).name}`)) {
+        let dPerson = this.state.persons.find(p => p.id === id)
+        if (window.confirm(`Haluatko varmasti poistaa henkilön ${dPerson.name}`)) {
             personService.deleteP(id).then(() => {
                 this.setState({
                     persons: this.state.persons.filter(person => person.id !== id)
                 })
+                this.setState({
+                    message: `Henkilön ${dPerson.name} tiedot poistettu onnistuneesti`
+                })
+                setTimeout(() => {
+                    this.setState({ message: null })
+                }, 5000)
+            }).catch(error => {
+                console.log('fail')
             })
+
         }
     }
 
@@ -95,6 +120,7 @@ class App extends React.Component {
         return (
             <div>
                 <h2>Puhelinluettelo</h2>
+                <Notification message={this.state.message} />
                 <div>
                     Rajaa näytettäviä:
                     <input

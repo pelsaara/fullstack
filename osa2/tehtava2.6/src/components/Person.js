@@ -2,10 +2,20 @@ import React from 'react'
 
 const Person = (props) => {
         return (
-               
-                <tr><td>{props.person.name}</td><td>{props.person.number}</td></tr>
+
+                <tr>
+                        <td>
+                                {props.person.name}
+                        </td>
+                        <td>
+                                {props.person.number}
+                        </td>
+                        <td>
+                                <button onClick={props.deletePerson}>Poista</button>
+                        </td>
+                </tr>
         )
-    
+
 }
 
 export default Person

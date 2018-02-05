@@ -8,13 +8,22 @@ class App extends React.Component {
     super(props)
     this.state = {
       filter: '',
-      countries: []
+      countries: [],
+      selectedCountry: false
     }
   }
 
   handleFilterChange = (event) => {
     console.log(event.target.value)
-    this.setState({ filter: event.target.value })
+    this.setState({ 
+      filter: event.target.value,
+      selectedCountry: false
+     })
+  }
+
+  handleSelectedCountry = (selectedCountry) => {
+    console.log(selectedCountry)
+    this.setState({ selectedCountry})
   }
 
   componentWillMount() {
@@ -34,11 +43,18 @@ class App extends React.Component {
         .filter(country => country.name.toLowerCase()
           .includes(this.state.filter.toLowerCase()))
 
+    let country 
+    if (this.state.selectedCountry) {
+      country = this.state.selectedCountry
+    } else {
+      country =  countriesToShow[0]
+    }
+
     let showCountries
-    if (countriesToShow.length === 1) {
-      showCountries = <Country country={countriesToShow[0]} onlyOne={true} />
+    if (countriesToShow.length === 1 || this.state.selectedCountry !== false) {
+      showCountries = <Country country={country} onlyOne={true} />
     } else if (countriesToShow.length <= 10) {
-      showCountries = <CountryList countries={countriesToShow} />
+      showCountries = <CountryList countries={countriesToShow} handleSelected={this.handleSelectedCountry} />
     } else {
       showCountries = 'Too many matches, please type more characters'
     }

@@ -13,7 +13,7 @@ const Country = (props) => {
                 )
         }
         return (
-                <tr><td>{props.country.name}</td></tr>
+                <p>{props.country.name}</p>
         )
 
 }

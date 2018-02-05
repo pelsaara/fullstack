@@ -22,17 +22,56 @@ class App extends React.Component {
         if (!this.state.persons.find(person => person.name.toLowerCase() === this.state.newName.toLowerCase())) {
 
             personService
-            .create(personObject)
-            .then(newPerson => {
-              this.setState({
-                persons: this.state.persons.concat(newPerson),
-                newName: '',
-                newNumber: ''
-              })
-            })
-            
+                .create(personObject)
+                .then(newPerson => {
+                    this.setState({
+                        persons: this.state.persons.concat(newPerson),
+                        newName: '',
+                        newNumber: ''
+                    })
+                })
+
+        } else {
+            if (window.confirm(`${personObject.name} on jo luettelossa, korvataanko numero uudella?`)) {
+                const person = this.state.persons.find(p => p.name.toLowerCase() === personObject.name.toLowerCase())
+                const updatedPerson = {
+                    ...person,
+                    number: personObject.number
+                }
+                console.log(person.name)
+                console.log(updatedPerson.name)
+                console.log(updatedPerson.id)
+                personService
+                    .update(updatedPerson.id, updatedPerson)
+                    .then(uPerson =>
+                        this.setState({
+                            persons: this.state.persons.map(person => person.id !== updatedPerson.id ? person : uPerson),
+                            newName: '',
+                            newNumber: ''
+                        })
+                    )
+            }
         }
 
+    }
+
+    componentWillMount() {
+        console.log('will mount')
+        personService
+            .getAll()
+            .then(response => {
+                this.setState({ persons: response })
+            })
+    }
+
+    deletePerson = (id) => {
+        if (window.confirm(`Haluatko varmasti poistaa henkilön ${this.state.persons.find(p => p.id === id).name}`)) {
+            personService.deleteP(id).then(() => {
+                this.setState({
+                    persons: this.state.persons.filter(person => person.id !== id)
+                })
+            })
+        }
     }
 
     handleNameChange = (event) => {
@@ -44,24 +83,15 @@ class App extends React.Component {
     }
 
     handleFilterChange = (event) => {
-        this.setState({ filter: event.target.value })        
+        this.setState({ filter: event.target.value })
     }
-
-    componentWillMount() {
-        console.log('will mount')
-        personService
-        .getAll()
-        .then(response => {
-          this.setState({ persons: response })
-        })
-      }
 
 
     render() {
         const personsToShow =
-        this.state.filter==='' ?
-          this.state.persons :
-          this.state.persons.filter(person => person.name.toLowerCase().startsWith(this.state.filter.toLowerCase()))
+            this.state.filter === '' ?
+                this.state.persons :
+                this.state.persons.filter(person => person.name.toLowerCase().startsWith(this.state.filter.toLowerCase()))
         return (
             <div>
                 <h2>Puhelinluettelo</h2>
@@ -90,7 +120,7 @@ class App extends React.Component {
                     </div>
                     <button type="submit">lisää</button>
                 </form>
-                <PersonList persons={personsToShow} />
+                <PersonList persons={personsToShow} deletePerson={this.deletePerson} />
             </div>
         )
     }

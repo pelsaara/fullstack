@@ -6,7 +6,12 @@ const PersonList = (props) => {
         <div>
             <h2>Numerot</h2>
             <table><tbody>
-                {props.persons.map(person => <Person key={person.name} person={person} />)}
+                {props.persons.map(person =>
+                    <Person key={person.name}
+                        person={person}
+                        deletePerson={() => props.deletePerson(person.id)}
+                    />
+                )}
             </tbody></table>
         </div>
     )

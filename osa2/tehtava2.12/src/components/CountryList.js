@@ -4,9 +4,11 @@ import Country from './Country'
 const CountryList = (props) => {
     return (
         <div>
-            <table><tbody>
-                {props.countries.map(country => <Country key={country.name} country={country} />)}
-            </tbody></table>
+            {props.countries.map(country =>
+                <div key={country.name} onClick={() => props.handleSelected(country)}>
+                    <Country country={country} />
+                </div>
+            )}
         </div>
     )
 }

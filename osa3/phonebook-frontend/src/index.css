@@ -1,0 +1,22 @@
+body {
+  margin: 20;
+  padding: 200;
+  font-family: sans-serif;
+}
+
+.error {
+  color: black;
+  background: red;
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.succeed {
+  color:white;
+  background: green;
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+

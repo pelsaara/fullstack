@@ -84,18 +84,13 @@ class App extends React.Component {
         if (window.confirm(`Haluatko varmasti poistaa henkilön ${dPerson.name}`)) {
             personService.deleteP(id).then(() => {
                 this.setState({
-                    persons: this.state.persons.filter(person => person.id !== id)
-                })
-                this.setState({
+                    persons: this.state.persons.filter(person => person.id !== id),
                     message: `Henkilön ${dPerson.name} tiedot poistettu onnistuneesti`
                 })
                 setTimeout(() => {
                     this.setState({ message: null })
                 }, 5000)
-            }).catch(error => {
-                console.log('fail')
             })
-
         }
     }
 

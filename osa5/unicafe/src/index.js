@@ -1,17 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import voteReducer from './reducers/voteReducer'
+
+const store = createStore(voteReducer)
 
 const Statistiikka = () => {
-  const palautteita = 0
+  const palautteita = store.getState()
+  const resetStore = (event) => {
+    store.dispatch({ type: 'ZERO' })
+  }
 
-  if (palautteita === 0) {
+  if (palautteita.bad === 0 && palautteita.ok === 0 && palautteita.good ===0) {
     return (
       <div>
-        <h2>stataistiikka</h2>
+        <h2>statistiikka</h2>
         <div>ei yhtään palautetta annettu</div>
       </div>
     )
   }
+
+
 
   return (
     <div>
@@ -20,35 +29,35 @@ const Statistiikka = () => {
         <tbody>
           <tr>
             <td>hyvä</td>
-            <td></td>
+            <td>{palautteita.good}</td>
           </tr>
           <tr>
             <td>neutraali</td>
-            <td></td>
+            <td>{palautteita.ok}</td>
           </tr>
           <tr>
             <td>huono</td>
-            <td></td>
+            <td>{palautteita.bad}</td>
           </tr>
           <tr>
             <td>keskiarvo</td>
-            <td></td>
+            <td>{palautteita.good - palautteita.bad / (palautteita.good + palautteita.ok + palautteita.bad)}</td>
           </tr>
           <tr>
             <td>positiivisia</td>
-            <td></td>
+            <td>{palautteita.good / (palautteita.good + palautteita.ok + palautteita.bad) * 100}</td>
           </tr>
         </tbody>
       </table>
 
-      <button>nollaa tilasto</button>
+      <button onClick={resetStore}>nollaa tilasto</button>
     </div >
   )
 }
 
 class App extends React.Component {
   klik = (nappi) => () => {
-
+    store.dispatch({ type: nappi })
   }
 
   render() {
@@ -64,4 +73,10 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+}
+
+renderApp()
+store.subscribe(renderApp)

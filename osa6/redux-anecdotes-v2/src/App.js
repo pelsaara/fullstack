@@ -7,15 +7,14 @@ import Filter from './components/Filter'
 class App extends React.Component {
 
   render() {
-    //const anecdotes = this.props.store.getState()
     return (
       <div>
         <h1>Programming anecdotes</h1>
-        <Notification store={this.props.store}/>
+        <Notification/>
         <br/>
-        <Filter store={this.props.store}/>
-        <AnecdoteList store={this.props.store} />
-        <AnecdoteForm store={this.props.store} />
+        <Filter/>
+        <AnecdoteList/>
+        <AnecdoteForm/>
       </div>
     )
   }

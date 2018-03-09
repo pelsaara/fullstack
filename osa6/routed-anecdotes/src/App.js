@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { Container, Table, Menu, Form, Button, Grid, Message } from 'semantic-ui-react'
+import { Segment, Container, Table, Menu, Form, Button, Grid, Message } from 'semantic-ui-react'
 
 const Navigation = () => (
   <div>
@@ -17,25 +17,6 @@ const Navigation = () => (
     </Menu>
   </div>
 )
-
-
-// class Notification extends React.Component {
-//   // Tämä ei enää käytössä koodissa, korvattu Semanticin Messagella
-//   render() {
-//     const style = {
-//       margin: 10,
-//       border: 'solid',
-//       borderColor: '#F0F8FF',
-//       padding: 10,
-//       borderWidth: 2
-//     }
-//     return (
-//       <div style={style}>
-//         {this.props.notification}
-//       </div>
-//     )
-//   }
-// }
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -76,8 +57,9 @@ const Anecdote = ({ anecdote }) => {
 const About = () => (
   <div>
     <Grid>
-      <Grid.Column width={9}>
+      <Grid.Column width={10}>
         <h2>About anecdote app</h2>
+        <Segment>
         <p>According to Wikipedia:</p>
 
         <em>An anecdote is a brief, revealing account of an individual person or an incident.
@@ -86,8 +68,9 @@ const About = () => (
       An anecdote is "a story with a point."</em>
 
         <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+      </Segment>
       </Grid.Column>
-      <Grid.Column width={3}>
+      <Grid.Column width={5}>
         <a title="By Krd (photo) Von Sprat (crop/extraction) (File:LinuxCon Europe Linus Torvalds 03.jpg) [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0) or CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File%3ALinuxCon_Europe_Linus_Torvalds_03_(cropped).jpg"><img width="256" alt="LinuxCon Europe Linus Torvalds 03 (cropped)" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg/256px-LinuxCon_Europe_Linus_Torvalds_03_%28cropped%29.jpg" /></a>
       </Grid.Column>
     </Grid>
@@ -96,10 +79,10 @@ const About = () => (
 
 const Footer = () => (
   <div>
-    <br />
+    <Segment>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/TKT21009/121540749'>Full Stack -sovelluskehitys</a>.
-
     See <a href='https://github.com/mluukkai/routed-anecdotes'>https://github.com/mluukkai/routed-anecdotes</a> for the source code.
+    </Segment>
   </div>
 )
 

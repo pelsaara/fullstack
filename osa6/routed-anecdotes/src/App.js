@@ -1,20 +1,33 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const Menu = () => (
-  <div>
-    <Link to="/">anecdotes</Link> &nbsp;
-  <Link to="/create">create new</Link> &nbsp;
-  <Link to="/about">about</Link>
-  </div>
-)
+const Menu = () => {
+  const style = {
+    margin: 10,
+    backgroundColor: '#F5F5DC',
+    border: 'solid',
+    borderColor: '#FAEBD7',
+    padding: 10,
+    borderWidth: 5,
+    fontSize: 18
+  }
+  return (
+    < div style={style}>
+      <Link to="/">anecdotes</Link>&nbsp;
+      <Link to="/create">create new</Link>&nbsp;
+      <Link to="/about">about</Link>
+    </div >
+  )
+}
 
 class Notification extends React.Component {
   render() {
     const style = {
+      margin: 10,
       border: 'solid',
+      borderColor: '#F0F8FF',
       padding: 10,
-      borderWidth: 1
+      borderWidth: 2
     }
     return (
       <div style={style}>
@@ -175,7 +188,7 @@ class App extends React.Component {
             <h1>Software anecdotes</h1>
             <Menu />
             <Notification notification={this.state.notification} />
-            <Route exact path="/create" render={({history}) =>
+            <Route exact path="/create" render={({ history }) =>
               <CreateNew history={history} addNew={this.addNew} />} />
             <Route exact path="/about" render={() => <About />} />
             <Route exact path="/" render={() =>

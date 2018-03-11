@@ -2,21 +2,30 @@ import React from 'react'
 import { Table } from 'semantic-ui-react'
 import userService from '../services/users'
 import PropTypes from 'prop-types'
+import blogService from '../services/blogs'
 
 class User extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: null
+      user: null,
+      blogs: []
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     userService.getOneById(this.props.id)
       .then(user => this.setState({ user: user }))
+    blogService.getAll().then(blogs =>
+      this.setState({ blogs: blogs }))
   }
 
   render() {
+    if (this.state.user === null) {
+      return (
+        <div>Ladataan käyttäjää</div>
+      )
+    }
     return (
       <div>
         <h2> {this.state.user.name}</h2>

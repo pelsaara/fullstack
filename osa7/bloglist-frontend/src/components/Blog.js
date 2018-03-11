@@ -1,5 +1,7 @@
 import React from 'react'
 import BlogService from '../services/blogs'
+import { Button } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
 class Blog extends React.Component {
   constructor(props) {
@@ -60,7 +62,7 @@ class Blog extends React.Component {
           {this.state.visible &&
             <div className='fullview'>
               linkki: <a href={this.state.url}>{this.state.url}</a>
-              <p>{this.state.likes} tykkäystä <button onClick={this.like}>tykkää</button></p>
+              <p>{this.state.likes} tykkäystä <Button onClick={this.like}>tykkää</Button></p>
               <p>lisännyt: {this.state.user.name ? this.state.user.name : 'Unknown'}</p>
               <DeleteButton
                 user={this.state.user}
@@ -78,17 +80,24 @@ const DeleteButton = (props) => {
   if (props.user.name === 'Unknown') {
     return (
       <div>
-        <button onClick={props.deleteBlog}>poista</button>
+        <Button onClick={props.deleteBlog}>poista</Button>
       </div>
     )
   } else if (props.user.username === props.loggedUser.username) {
     return (
       <div>
-        <button onClick={props.deleteBlog}>poista</button>
+        <Button onClick={props.deleteBlog}>poista</Button>
       </div>
     )
   }
   return null
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  loggedUser: PropTypes.object.isRequired,
+  deleteBlog: PropTypes.func.isRequired
 }
 
 export default Blog

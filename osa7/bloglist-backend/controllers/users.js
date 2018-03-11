@@ -5,10 +5,19 @@ const User = require('../models/user')
 usersRouter.get('/', async (req, res) => {
   try {
     const users = await User.find({})
-      .find({})
       .populate('blogs', {title: 1, author: 1, url: 1, likes: 1})
     res.json(users.map(User.format))
   } catch (exception) {
+    console.log(exception)
+    return res.status(500).send({ error: 'something went wrong' })
+  }
+})
+
+usersRouter.get('/:id', async (req, res)=> {
+  try {
+    const user = await User.findById(req.params.id)
+    res.json(User.format(user))
+  } catch (exception){
     console.log(exception)
     return res.status(500).send({ error: 'something went wrong' })
   }

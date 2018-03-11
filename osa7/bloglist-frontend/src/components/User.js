@@ -7,13 +7,13 @@ class User extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: []
+      user: null
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     userService.getOneById(this.props.id)
-      .then(user => this.setState({ user }))
+      .then(user => this.setState({ user: user }))
   }
 
   render() {
@@ -51,8 +51,8 @@ class User extends React.Component {
   }
 }
 
-User.PropTypes = {
-  id: PropTypes.object.isRequired
+User.propTypes = {
+  id: PropTypes.string.isRequired
 }
 
 export default User

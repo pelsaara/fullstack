@@ -95,9 +95,7 @@ const DeleteButton = (props) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  loggedUser: PropTypes.object.isRequired,
-  deleteBlog: PropTypes.func.isRequired
+  loggedUser: PropTypes.object.isRequired
 }
 
 export default Blog

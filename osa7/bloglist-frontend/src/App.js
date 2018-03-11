@@ -4,7 +4,6 @@ import { Container, Menu } from 'semantic-ui-react'
 import Home from './components/Home'
 import UserList from './components/UserList'
 import User from './components/User'
-import userService from './services/users'
 
 const Navigation = () => (
   <div>
@@ -20,10 +19,6 @@ const Navigation = () => (
 )
 
 class App extends React.Component {
-
-  componentDidMount() {
-    console.log('ei toimi')
-  }
 
   render() {
     return (
